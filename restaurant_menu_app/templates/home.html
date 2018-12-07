@@ -3,22 +3,21 @@
 {% block content %}
         <div class="content">
             <div class="main">
-                {% for article in articles %}
+                {% for restaurant in restaurants %}
                     <article>
-                        <div class="art-head">
-                            <small>{{ article.date_posted.strftime('%Y-%m-%d') }}</small>
-                            <a href="{{ url_for('article', article_id=article.id) }}">
-                                <h1>{{ article.title }}</h1>
+                        <div class="res-head">
+                            <a href="#">
+                                <h1>{{ restaurant.name }}</h1>
                             </a>
                         </div>
-                        <p>{{ article.content }}</p>
                     </article>
                     <br>
                 {% endfor %}
             </div>
             <div class="col-r">
-                <h3>Column</h3>
-                <p>Content</p>
+                <h3>Restaurant List</h3>
+                <br>
+                <p>Select a restaurant to see the menu.</p>
             </div>
         </div>
 {% endblock content %}

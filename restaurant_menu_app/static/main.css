@@ -65,19 +65,15 @@ nav{
     border-radius: 10px;
 }
 
-.art-head small{
+.res-head small{
     float: right;
 }
 
-.art-head h1{
+.res-head h1{
     color: #000000;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: #afcfaf;
-    margin-bottom: 20px;
 }
 
-.art-head a h1:hover{
+.res-head a h1:hover{
     color: #609f60;
 }
 
