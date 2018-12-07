@@ -1,0 +1,117 @@
+/* Minor Resets */
+body, div, ul, h1, h2, h3, h4, h5, h6, p{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body{
+    background-color: #afcfaf;
+}
+
+h1{
+    font-size: 2em;
+}
+
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/* Navigation */
+nav{
+    background-color: #396039;
+    height: 85px;
+    border-bottom-color: #ffffff;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+.nav-l{
+    float: left;
+    margin: 20px 100px;
+    font-size: 40px;
+}
+
+.nav-r{
+    float: right;
+    font-size: medium;
+    margin: 40px 100px;
+}
+
+.nav-r li{
+    display: inline-block;
+    padding: 0 20px;
+}
+
+/* Content */
+.content{
+    max-width: 850px;
+    margin: 50px auto 0 auto;
+}
+
+/* Main */
+.main{
+    float: left;
+}
+
+.main article{
+    background-color: #ffffff;
+    width: 500px;
+    padding: 20px;
+    border-color: #396039;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.art-head small{
+    float: right;
+}
+
+.art-head h1{
+    color: #000000;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #afcfaf;
+    margin-bottom: 20px;
+}
+
+.art-head a h1:hover{
+    color: #609f60;
+}
+
+/* Right Column */
+.col-r{
+    float: right;
+    width: 200px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-color: #396039;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+/* Comments */
+.comment{
+    background-color: #ffffff;
+    width: 450px;
+    padding: 20px;
+    margin: auto;
+    border-color: #396039;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.comment small{
+    float: right;
+}
+
+.comment h4{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #afcfaf;
+    margin-bottom: 10px;
+}

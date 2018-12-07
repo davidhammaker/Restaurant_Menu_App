@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="content">
+            <div class="main">
+                    <article>
+                        <div class="art-head">
+                            <small>{{ article.date_posted.strftime('%Y-%m-%d') }}</small>
+                            <h1>{{ article.title }}</h1>
+                        </div>
+                        <p>{{ article.content }}</p>
+                    </article>
+                    {% for comment in comments %}
+                        <br>
+                        <div class="comment">
+                            <small>{{ comment.date_posted.strftime('%Y-%m-%d') }}</small>
+                            <h4>{{ comment.author.username }}</h4>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    {% endfor %}
+            </div>
+            <div class="col-r">
+                <h3>Column</h3>
+                <p>Content</p>
+            </div>
+        </div>
+{% endblock content %}
