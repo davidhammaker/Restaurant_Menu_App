@@ -7,6 +7,4 @@ from restaurant_menu_app.models import Restaurant
 @app.route('/home')
 def home():
     restaurants = Restaurant.query.all()
-    for restaurant in restaurants:
-        print(restaurant.name)
     return render_template('home.html', restaurants=restaurants)
