@@ -4,24 +4,24 @@
         <div class="content">
             <div class="main">
                     <article>
-                        <div class="art-head">
-                            <small>{{ article.date_posted.strftime('%Y-%m-%d') }}</small>
-                            <h1>{{ article.title }}</h1>
+                        <div class="res-head">
+                            <h1>{{ restaurant.name }}</h1>
                         </div>
-                        <p>{{ article.content }}</p>
                     </article>
-                    {% for comment in comments %}
+                    {% for item in items %}
                         <br>
-                        <div class="comment">
-                            <small>{{ comment.date_posted.strftime('%Y-%m-%d') }}</small>
-                            <h4>{{ comment.author.username }}</h4>
-                            <p>{{ comment.content }}</p>
+                        <div class="menu">
+                            <small>{{ item.price }}</small>
+                            <h4>{{ item.name }}</h4>
+                            <p class="course">{{ item.course }}</p>
+                            <p>{{ item.description }}</p>
                         </div>
                     {% endfor %}
             </div>
             <div class="col-r">
-                <h3>Column</h3>
-                <p>Content</p>
+                <h3>Menu</h3>
+                <br>
+                <p>This is the menu for "{{ restaurant.name }}."</p>
             </div>
         </div>
 {% endblock content %}

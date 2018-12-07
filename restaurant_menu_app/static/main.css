@@ -90,7 +90,7 @@ nav{
 }
 
 /* Comments */
-.comment{
+.menu{
     background-color: #ffffff;
     width: 450px;
     padding: 20px;
@@ -101,13 +101,19 @@ nav{
     border-radius: 10px;
 }
 
-.comment small{
+.menu small{
     float: right;
 }
 
-.comment h4{
+.menu h4{
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: #afcfaf;
+    margin-bottom: 10px;
+}
+
+.course{
+    font-size: small;
+    font-style: italic;
     margin-bottom: 10px;
 }
