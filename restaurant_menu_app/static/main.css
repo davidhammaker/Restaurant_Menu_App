@@ -117,3 +117,43 @@ nav{
     font-style: italic;
     margin-bottom: 10px;
 }
+
+/* Restaurant Form */
+.res-form{
+    background-color: #ffffff;
+    width: 450px;
+    padding: 20px;
+    margin: auto;
+    border-color: #396039;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.res-form h3{
+    margin-bottom: 10px;
+}
+
+.res-form button{
+    color: #ffffff;
+    background-color: #396039;
+    border-color: #afcfaf;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+.res-form button:hover{
+    color: #000000;
+    background-color: #afcfaf;
+    border-color: #396039;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+.res-form-field{
+    width: 448px;
+    border-color: #396039;
+    border-width: 1px;
+    border-style: solid;
+}
