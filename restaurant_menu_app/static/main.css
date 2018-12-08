@@ -157,3 +157,26 @@ nav{
     border-width: 1px;
     border-style: solid;
 }
+
+/* flash */
+.flash{
+    width: 100%;
+    background-color: #ffffff;
+}
+
+.flash div{
+    text-align: center;
+    margin: auto;
+}
+
+.good{
+    color: #396039;
+}
+
+.neutral{
+    color: #000000;
+}
+
+.bad{
+    color: #ff0000;
+}
