@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, SelectField, ValidationError, IntegerField
+from wtforms import (StringField, TextAreaField, SubmitField, SelectField,
+                     ValidationError, IntegerField, RadioField)
 from restaurant_menu_app.models import Restaurant, MenuItem
 from wtforms.validators import DataRequired, Length
 
@@ -21,7 +22,8 @@ class MenuItemsForm(FlaskForm):
                                             ('Dessert', 'Dessert'),
                                             ('Beverage', 'Beverage')],
                          validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[DataRequired(), Length(min=1, max=300)])
+    description = TextAreaField('Description', validators=[DataRequired(),
+                                                           Length(min=1, max=300)])
     price = StringField('Course', validators=[DataRequired(), Length(min=1, max=10)])
     restaurant_id = IntegerField('Restaurant ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
@@ -30,3 +32,11 @@ class MenuItemsForm(FlaskForm):
         name = MenuItem.query.filter_by(name=name, restaurant_id=restaurant_id).first()
         if name:
             raise ValidationError('That item is already on the menu.')
+
+
+class DeleteConfirmForm(FlaskForm):
+    confirm = RadioField('Confirm',
+                         choices=[('Delete', 'Delete'),
+                                  ('Cancel', 'Cancel')],
+                         validators=[DataRequired()])
+    submit = SubmitField('Submit')

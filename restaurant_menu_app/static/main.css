@@ -159,6 +159,10 @@ nav{
     border-style: solid;
 }
 
+.res-form-radio ul{
+    list-style-type: none;
+}
+
 .res-form-field-errors{
     width: 448px;
     border-color: #ff0000;
