@@ -20,6 +20,17 @@
                 </ul>
             </div>
         </nav>
+        <div class="flash">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
     {% block content %}
     {% endblock content %}
     </body>

@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, flash
 from restaurant_menu_app import app, db
 from restaurant_menu_app.models import Restaurant, MenuItem
 from restaurant_menu_app.forms import RestaurantForm
@@ -27,5 +27,6 @@ def new_restaurant():
         new_restaurant = Restaurant(name=form.name.data)
         db.session.add(new_restaurant)
         db.session.commit()
+        flash(f'"{form.name.data}" has been added!', 'good')
         return redirect(url_for('home'))
     return render_template('new_restaurant.html', form=form, title='New Restaurant')
