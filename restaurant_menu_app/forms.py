@@ -9,7 +9,7 @@ class RestaurantForm(FlaskForm):
     submit = SubmitField('Submit')
 
     def validate_name(self, name):
-        restaurant = Restaurant.query.filter_by(name=name).first()
+        restaurant = Restaurant.query.filter_by(name=name.data).first()
         if restaurant:
             raise ValidationError('That restaurant already exists.')
 

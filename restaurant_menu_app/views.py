@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect
-from restaurant_menu_app import app
+from restaurant_menu_app import app, db
 from restaurant_menu_app.models import Restaurant, MenuItem
 from restaurant_menu_app.forms import RestaurantForm
 
@@ -20,7 +20,12 @@ def restaurant(restaurant_name):
     return render_template('restaurant.html', restaurant=restaurant, items=items)
 
 
-@app.route('/new_restaurant')
+@app.route('/new_restaurant', methods=['GET', 'POST'])
 def new_restaurant():
     form = RestaurantForm()
+    if form.validate_on_submit():
+        new_restaurant = Restaurant(name=form.name.data)
+        db.session.add(new_restaurant)
+        db.session.commit()
+        return redirect(url_for('home'))
     return render_template('new_restaurant.html', form=form, title='New Restaurant')
