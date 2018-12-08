@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash
 from restaurant_menu_app import app, db
 from restaurant_menu_app.models import Restaurant, MenuItem
-from restaurant_menu_app.forms import RestaurantForm
+from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm
 
 
 @app.route('/')
