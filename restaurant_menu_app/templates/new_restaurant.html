@@ -6,7 +6,18 @@
                 <form class="res-form" action="" method="post">
                     {{ form.hidden_tag() }}
                     <h3>{{ form.name.label }}:</h3>
-                    <p>{{ form.name(class="res-form-field") }}</p>
+                    {% if form.name.errors %}
+                        <p>{{ form.name(class="res-form-field-errors") }}</p>
+                        <div class="error-feedback">
+                            <ul>
+                                {% for error in form.name.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <p>{{ form.name(class="res-form-field") }}</p>
+                    {% endif %}
                     <br>
                     {{ form.submit(class="res-form-button") }}
                 </form>
