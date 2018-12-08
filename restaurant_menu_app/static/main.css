@@ -36,7 +36,7 @@ nav{
 .nav-r{
     float: right;
     font-size: medium;
-    margin: 40px 100px;
+    margin: 40px 100px 0px 40px;
 }
 
 .nav-r li{
@@ -159,24 +159,35 @@ nav{
 }
 
 /* flash */
-.flash{
-    width: 100%;
-    background-color: #ffffff;
-}
-
-.flash div{
-    text-align: center;
-    margin: auto;
-}
-
 .good{
+    text-align: center;
     color: #396039;
+    background-color: #99ff99;
+    border-bottom-style: solid;
+    border-bottom-color: #396039;
+    border-bottom-width: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .neutral{
-    color: #000000;
+    text-align: center;
+    color: #393960;
+    background-color: #9999ff;
+    border-bottom-style: solid;
+    border-bottom-color: #393960;
+    border-bottom-width: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .bad{
-    color: #ff0000;
+    text-align: center;
+    color: #603939;
+    background-color: #ff9999;
+    border-bottom-style: solid;
+    border-bottom-color: #603939;
+    border-bottom-width: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
