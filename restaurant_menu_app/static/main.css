@@ -214,3 +214,14 @@ nav{
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/* Buttons */
+.delete-button{
+    color: #603939;
+    background-color: #ff9999;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 4px;
+    float: right;
+}

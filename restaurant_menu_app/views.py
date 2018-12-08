@@ -33,7 +33,7 @@ def new_restaurant():
 
 
 @app.route('/<string:restaurant_name>/delete_confirm')
-def delete_restaurant(restaurant_name):
+def delete_confirm(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
         return redirect(url_for('home'))
@@ -55,4 +55,4 @@ def delete(restaurant_name):
         return redirect(url_for('home'))
     else:
         flash('Please select an option and try again.', 'neutral')
-        return redirect(url_for('delete_restaurant', restaurant_name=restaurant_name))
+        return redirect(url_for('delete_confirm', restaurant_name=restaurant_name))
