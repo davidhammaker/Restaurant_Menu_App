@@ -19,4 +19,4 @@ class MenuItem(db.Model):
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'))
 
     def __repr__(self):
-        return f"MenuItem('{self.name}', '{self.course}', '{self.price}')"
+        return f"MenuItem('{self.name}', '{self.course}', '{self.price}', '{self.restaurant.name}')"
