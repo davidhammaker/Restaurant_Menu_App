@@ -1,11 +1,17 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, SelectField
+from wtforms import StringField, TextAreaField, SubmitField, SelectField, ValidationError, IntegerField
+from restaurant_menu_app.models import Restaurant, MenuItem
 from wtforms.validators import DataRequired, Length
 
 
 class RestaurantForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=1, max=50)])
     submit = SubmitField('Submit')
+
+    def validate_name(self, name):
+        restaurant = Restaurant.query.filter_by(name=name).first()
+        if restaurant:
+            raise ValidationError('That restaurant already exists.')
 
 
 class MenuItemsForm(FlaskForm):
@@ -19,3 +25,8 @@ class MenuItemsForm(FlaskForm):
     price = StringField('Course', validators=[DataRequired(), Length(min=1, max=10)])
     restaurant_id = IntegerField('Restaurant ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+    def validate_name(self, name, restaurant_id):
+        name = MenuItem.query.filter_by(name=name, restaurant_id=restaurant_id).first()
+        if name:
+            raise ValidationError('That item is already on the menu.')
