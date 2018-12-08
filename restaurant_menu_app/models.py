@@ -16,7 +16,7 @@ class MenuItem(db.Model):
     course = db.Column(db.String(250))
     description = db.Column(db.String(250))
     price = db.Column(db.String(8))
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'))
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
 
     def __repr__(self):
         return f"MenuItem('{self.name}', '{self.course}', '{self.price}', '{self.restaurant.name}')"
