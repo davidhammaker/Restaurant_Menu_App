@@ -17,4 +17,5 @@ class MenuItemsForm(FlaskForm):
                          validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired(), Length(min=1, max=300)])
     price = StringField('Course', validators=[DataRequired(), Length(min=1, max=10)])
+    restaurant_id = IntegerField('Restaurant ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
