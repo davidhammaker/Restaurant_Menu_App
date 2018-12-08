@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="content">
+            <div class="main">
+                <form class="res-form" action="" method="post">
+                    {{ form.hidden_tag() }}
+                    <h3>{{ form.name.label }}:</h3>
+                    <p>{{ form.name(class="res-form-field") }}</p>
+                    <br>
+                    <button type="submit">{{ form.submit.label }}</button>
+                </form>
+            </div>
+            <div class="col-r">
+                <h3>New Restaurant</h3>
+                <br>
+                <p>Use the form to enter the name of your new restaurant.</p>
+            </div>
+        </div>
+{% endblock content %}

@@ -1,6 +1,7 @@
 from flask import render_template, url_for, redirect
 from restaurant_menu_app import app
 from restaurant_menu_app.models import Restaurant, MenuItem
+from restaurant_menu_app.forms import RestaurantForm
 
 
 @app.route('/')
@@ -17,3 +18,9 @@ def restaurant(restaurant_name):
         return redirect(url_for('home'))
     items = restaurant.menu_items
     return render_template('restaurant.html', restaurant=restaurant, items=items)
+
+
+@app.route('/new_restaurant')
+def new_restaurant():
+    form = RestaurantForm()
+    return render_template('new_restaurant.html', form=form, title='New Restaurant')
