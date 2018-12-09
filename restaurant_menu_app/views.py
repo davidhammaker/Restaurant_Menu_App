@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash
 from restaurant_menu_app import app, db
 from restaurant_menu_app.models import Restaurant, MenuItem
-from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm
+from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm, MenuItemsForm
 
 
 @app.route('/')
@@ -56,3 +56,24 @@ def delete(restaurant_name):
     else:
         flash('Please select an option and try again.', 'neutral')
         return redirect(url_for('delete_confirm', restaurant_name=restaurant_name))
+
+
+@app.route('/<string:restaurant_name>/add_item', methods=['GET', 'POST'])
+def add_item(restaurant_name):
+    form = MenuItemsForm()
+    restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
+    form.restaurant_id.data = restaurant.id
+    if form.validate_on_submit():
+        check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
+        if check_item:
+            flash(f'"{form.name.data}" is already on the menu.', 'bad')
+            return redirect(url_for('add_item', restaurant_name=restaurant_name))
+        else:
+            new_item = MenuItem(name=form.name.data, course=form.course.data,
+                            price=form.price.data, description=form.description.data,
+                            restaurant_id=form.restaurant_id.data)
+            db.session.add(new_item)
+            db.session.commit()
+            flash(f'"{form.name.data}" has been added!', 'good')
+            return redirect(url_for('restaurant', restaurant_name=restaurant_name))
+    return render_template('add_item.html', form=form, title='New Menu Item')

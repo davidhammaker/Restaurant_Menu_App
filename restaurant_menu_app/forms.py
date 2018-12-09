@@ -24,14 +24,9 @@ class MenuItemsForm(FlaskForm):
                          validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired(),
                                                            Length(min=1, max=300)])
-    price = StringField('Course', validators=[DataRequired(), Length(min=1, max=10)])
+    price = StringField('Price', validators=[DataRequired(), Length(min=1, max=10)])
     restaurant_id = IntegerField('Restaurant ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
-
-    def validate_name(self, name, restaurant_id):
-        name = MenuItem.query.filter_by(name=name, restaurant_id=restaurant_id).first()
-        if name:
-            raise ValidationError('That item is already on the menu.')
 
 
 class DeleteConfirmForm(FlaskForm):
