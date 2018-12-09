@@ -4,6 +4,8 @@
         <div class="content">
             <div class="main">
                 <form class="res-form" action="" method="post">
+                    <h2>New Restaurant</h2>
+                    <br>
                     {{ form.hidden_tag() }}
                     <h3>{{ form.name.label }}:</h3>
                     {% if form.name.errors %}
@@ -23,8 +25,6 @@
                 </form>
             </div>
             <div class="col-r">
-                <h3>New Restaurant</h3>
-                <br>
                 <p>Use the form to enter the name of your new restaurant.</p>
             </div>
         </div>
