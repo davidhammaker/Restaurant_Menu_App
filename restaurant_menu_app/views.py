@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, jsonify
 from restaurant_menu_app import app, db
 from restaurant_menu_app.models import Restaurant, MenuItem
 from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm, MenuItemsForm, EditItemForm
@@ -163,3 +163,58 @@ def edit(restaurant_name):
     elif request.method == 'GET':
         form.name.data = restaurant.name
     return render_template('edit.html', form=form, title='Edit Restaurant')
+
+
+def prep_menu(menu):
+    items = []
+    for item in menu:
+        items.append({'name': item.name,
+                      'course': item.course,
+                      'price': item.price,
+                      'description': item.description,
+                      'id': item.id})
+    return items
+
+
+def prep_restaurants(restaurants):
+    data = []
+    for restaurant in restaurants:
+        data.append({'name': restaurant.name,
+                     'id': restaurant.id})
+    return data
+
+
+def prep_restaurant(restaurant):
+    data = {'name': restaurant.name,
+            'id': restaurant.id}
+    return data
+
+
+def prep_item(item):
+    data = {'name': item.name,
+            'course': item.course,
+            'price': item.price,
+            'description': item.description,
+            'id': item.id}
+    return data
+
+
+@app.route('/restaurants/<int:restaurant_id>/menu/JSON')
+def menu_json(restaurant_id):
+    restaurant = Restaurant.query.get_or_404(restaurant_id)
+    menu = restaurant.menu_items
+    return jsonify(restaurant=prep_restaurant(restaurant), menu=prep_menu(menu))
+
+
+@app.route('/restaurants/JSON')
+def restaurants_json():
+    restaurants = Restaurant.query.all()
+    return jsonify(restaurants=prep_restaurants(restaurants))
+
+
+@app.route('/restaurants/<int:restaurant_id>/menu/<int:menu_id>/JSON')
+def item_json(restaurant_id, menu_id):
+    restaurant = Restaurant.query.get_or_404(restaurant_id)
+    menu_item = MenuItem.query.get_or_404(menu_id)
+    return jsonify(restaurant=prep_restaurant(restaurant), menu_item=prep_item(menu_item))
+
