@@ -227,6 +227,11 @@ nav{
     margin-left: 5px;
 }
 
+.delete-button:hover{
+    color: #ff9999;
+    background-color: #603939;
+}
+
 .add-button{
     color: #393960;
     background-color: #9999ff;
@@ -236,4 +241,9 @@ nav{
     padding: 4px;
     float: right;
     margin-left: 5px;
+}
+
+.add-button:hover{
+color: #9999ff;
+background-color: #393960;
 }
