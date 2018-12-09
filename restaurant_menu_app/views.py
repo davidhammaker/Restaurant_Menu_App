@@ -106,3 +106,30 @@ def edit_item(restaurant_name, item_name):
         form.description.data = menu_item.description
         form.price.data = menu_item.price
     return render_template('edit_item.html', form=form, title='Edit Menu Item')
+
+
+@app.route('/<string:restaurant_name>/delete_item_confirm/<string:item_name>')
+def delete_item_confirm(restaurant_name, item_name):
+    restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
+    menu_item = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
+    if not restaurant or not menu_item:
+        return redirect(url_for('home'))
+    form = DeleteConfirmForm()
+    return render_template('delete_item_confirm.html', form=form, restaurant=restaurant, menu_item=menu_item)
+
+
+@app.route('/<string:restaurant_name>/delete_item/<string:item_name>', methods=['POST'])
+def delete_item(restaurant_name, item_name):
+    menu_item = MenuItem.query.filter_by(name=item_name).first()
+    form = DeleteConfirmForm()
+    if form.validate_on_submit():
+        if form.confirm.data == 'Delete':
+            db.session.delete(menu_item)
+            db.session.commit()
+            flash(f'"{menu_item.name}" has been deleted.', 'good')
+        else:
+            flash(f'Nothing has been deleted.', 'neutral')
+        return redirect(url_for('restaurant', restaurant_name=restaurant_name))
+    else:
+        flash('Please select an option and try again.', 'neutral')
+        return redirect(url_for('delete_item_confirm', restaurant_name=restaurant_name, item_name=item_name))
