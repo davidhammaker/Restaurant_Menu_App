@@ -140,15 +140,15 @@ def delete_item(restaurant_name, item_name):
 @app.route('/<string:restaurant_name>/edit', methods=['GET', 'POST'])
 def edit(restaurant_name):
     form = RestaurantForm()
-    restaurant_search = Restaurant.query.filter_by(name=restaurant_name).first()
-    if not restaurant_search:
+    restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
+    if not restaurant:
         return redirect('home.html')
     if form.validate_on_submit():
         if restaurant.name != form.name.data:
             check_restaurant = Restaurant.query.filter_by(name=form.name.data).first()
             if check_restaurant:
                 flash(f'"{form.name.data}" already exists.', 'bad')
-                return redirect(url_for('edit_item', restaurant_name=restaurant.name, item_name=menu_item.name))
+                return redirect(url_for('edit_item', restaurant_name=restaurant.name))
         restaurant.name = form.name.data
         db.session.commit()
         flash(f'"{form.name.data}" has been updated!', 'good')
