@@ -17,7 +17,7 @@ def restaurant(restaurant_name):
     if not restaurant:
         return redirect(url_for('home'))
     items = restaurant.menu_items
-    return render_template('restaurant.html', restaurant=restaurant, items=items)
+    return render_template('restaurant.html', restaurant=restaurant, items=items, title=restaurant_name)
 
 
 @app.route('/new_restaurant', methods=['GET', 'POST'])
@@ -38,7 +38,7 @@ def delete_confirm(restaurant_name):
     if not restaurant:
         return redirect(url_for('home'))
     form = DeleteConfirmForm()
-    return render_template('delete_confirm.html', form=form, restaurant=restaurant)
+    return render_template('delete_confirm.html', form=form, restaurant=restaurant, title=f'Delete "{restaurant_name}"')
 
 
 @app.route('/<string:restaurant_name>/delete', methods=['POST'])
@@ -105,7 +105,7 @@ def edit_item(restaurant_name, item_name):
         form.course.data = menu_item.course
         form.description.data = menu_item.description
         form.price.data = menu_item.price
-    return render_template('edit_item.html', form=form, title='Edit Menu Item')
+    return render_template('edit_item.html', form=form, title=f'Edit "{item_name}"')
 
 
 @app.route('/<string:restaurant_name>/delete_item_confirm/<string:item_name>')
@@ -115,7 +115,9 @@ def delete_item_confirm(restaurant_name, item_name):
     if not restaurant or not menu_item:
         return redirect(url_for('home'))
     form = DeleteConfirmForm()
-    return render_template('delete_item_confirm.html', form=form, restaurant=restaurant, menu_item=menu_item)
+    return render_template('delete_item_confirm.html', form=form,
+                           restaurant=restaurant, menu_item=menu_item,
+                           title=f'Delete "{item_name}"')
 
 
 @app.route('/<string:restaurant_name>/delete_item/<string:item_name>', methods=['POST'])
