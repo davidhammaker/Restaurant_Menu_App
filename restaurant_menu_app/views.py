@@ -45,6 +45,8 @@ def delete_confirm(restaurant_name):
 def delete(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     form = DeleteConfirmForm()
+    if not restaurant:
+        return redirect('home.html')
     if form.validate_on_submit():
         if form.confirm.data == 'Delete':
             db.session.delete(restaurant)
@@ -63,6 +65,8 @@ def add_item(restaurant_name):
     form = MenuItemsForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     form.restaurant_id.data = restaurant.id
+    if not restaurant:
+        return redirect('home.html')
     if form.validate_on_submit():
         check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
         if check_item:
@@ -83,9 +87,10 @@ def add_item(restaurant_name):
 def edit_item(restaurant_name, item_name):
     form = EditItemForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
-    menu_item_search = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
-    menu_item = MenuItem.query.get_or_404(menu_item_search.id)
+    menu_item = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
     form.restaurant_id.data = restaurant.id
+    if not restaurant or not menu_item:
+        return redirect('home.html')
     if form.validate_on_submit():
         if menu_item.name != form.name.data:
             check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
