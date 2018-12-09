@@ -1,7 +1,7 @@
-from flask import render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash, request
 from restaurant_menu_app import app, db
 from restaurant_menu_app.models import Restaurant, MenuItem
-from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm, MenuItemsForm
+from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm, MenuItemsForm, EditItemForm
 
 
 @app.route('/')
@@ -77,3 +77,32 @@ def add_item(restaurant_name):
             flash(f'"{form.name.data}" has been added!', 'good')
             return redirect(url_for('restaurant', restaurant_name=restaurant_name))
     return render_template('add_item.html', form=form, title='New Menu Item')
+
+
+@app.route('/<string:restaurant_name>/edit_item/<string:item_name>', methods=['GET', 'POST'])
+def edit_item(restaurant_name, item_name):
+    form = EditItemForm()
+    restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
+    menu_item_search = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
+    menu_item = MenuItem.query.get_or_404(menu_item_search.id)
+    form.restaurant_id.data = restaurant.id
+    if form.validate_on_submit():
+        if menu_item.name != form.name.data:
+            check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
+            if check_item:
+                flash(f'"{form.name.data}" is already on the menu.', 'bad')
+                return redirect(url_for('edit_item', restaurant_name=restaurant.name, item_name=menu_item.name))
+        menu_item.name = form.name.data
+        menu_item.course = form.course.data
+        menu_item.description = form.description.data
+        menu_item.price = form.price.data
+        db.session.commit()
+        print(menu_item)
+        flash(f'"{form.name.data}" has been updated!', 'good')
+        return redirect(url_for('restaurant', restaurant_name=restaurant.name))
+    elif request.method == 'GET':
+        form.name.data = menu_item.name
+        form.course.data = menu_item.course
+        form.description.data = menu_item.description
+        form.price.data = menu_item.price
+    return render_template('edit_item.html', form=form, title='Edit Menu Item')

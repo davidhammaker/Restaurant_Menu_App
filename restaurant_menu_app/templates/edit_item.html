@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="content">
+            <div class="main">
+                <form class="res-form" action="" method="post">
+                    <h2>Edit Menu Item</h2>
+                    <br>
+                    {{ form.hidden_tag() }}
+                    <h3>{{ form.name.label }}:</h3>
+                    {% if form.name.errors %}
+                        <p>{{ form.name(class="res-form-field-errors") }}</p>
+                        <div class="error-feedback">
+                            <ul>
+                                {% for error in form.name.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <p>{{ form.name(class="res-form-field") }}</p>
+                    {% endif %}
+                    <br>
+                    <h3>{{ form.course.label }}:</h3>
+                    {% if form.course.errors %}
+                        <p>{{ form.course(class="res-form-field-errors") }}</p>
+                        <div class="error-feedback">
+                            <ul>
+                                {% for error in form.course.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <p>{{ form.course(class="res-form-field") }}</p>
+                    {% endif %}
+                    <br>
+                    <h3>{{ form.price.label }}:</h3>
+                    {% if form.price.errors %}
+                        <p>{{ form.price(class="res-form-field-errors") }}</p>
+                        <div class="error-feedback">
+                            <ul>
+                                {% for error in form.price.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <p>{{ form.price(class="res-form-field") }}</p>
+                    {% endif %}
+                    <br>
+                    <h3>{{ form.description.label }}:</h3>
+                    {% if form.description.errors %}
+                        <p>{{ form.description(class="res-form-field-errors") }}</p>
+                        <div class="error-feedback">
+                            <ul>
+                                {% for error in form.description.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <p>{{ form.description(class="res-form-field") }}</p>
+                    {% endif %}
+                    <br>
+                    {{ form.submit(class="res-form-button") }}
+                </form>
+            </div>
+            <div class="col-r">
+                <p>Use the form to enter information about your menu item.</p>
+            </div>
+        </div>
+{% endblock content %}

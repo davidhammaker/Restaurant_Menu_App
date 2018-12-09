@@ -35,3 +35,17 @@ class DeleteConfirmForm(FlaskForm):
                                   ('Cancel', 'Cancel')],
                          validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class EditItemForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired(), Length(min=1, max=50)])
+    course = SelectField('Course', choices=[('Entree', 'Entree'),
+                                            ('Appetizer', 'Appetizer'),
+                                            ('Dessert', 'Dessert'),
+                                            ('Beverage', 'Beverage')],
+                         validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired(),
+                                                           Length(min=1, max=300)])
+    price = StringField('Price', validators=[DataRequired(), Length(min=1, max=10)])
+    restaurant_id = IntegerField('Restaurant ID', validators=[DataRequired()])
+    submit = SubmitField('Submit')
