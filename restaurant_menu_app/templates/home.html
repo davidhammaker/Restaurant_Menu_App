@@ -6,7 +6,7 @@
                 {% for restaurant in restaurants %}
                     <article>
                         <div class="res-head">
-                            <a href="{{ url_for('restaurant', restaurant_name=restaurant.name) }}">
+                            <a href="{{ url_for('restaurants.restaurant', restaurant_name=restaurant.name) }}">
                                 <h1>{{ restaurant.name }}</h1>
                             </a>
                         </div>

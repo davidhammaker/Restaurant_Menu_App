@@ -3,7 +3,7 @@
 {% block content %}
         <div class="content">
             <div class="main">
-                <form class="res-form" action="{{ url_for('delete_item', restaurant_name=restaurant.name, item_name=menu_item.name) }}" method="post">
+                <form class="res-form" action="{{ url_for('items.delete_item', restaurant_name=restaurant.name, item_name=menu_item.name) }}" method="post">
                     <h3>Are you sure you want to delete "{{ menu_item.name }}"?</h3>
                     {{ form.hidden_tag() }}
                     <div class="res-form-radio">
