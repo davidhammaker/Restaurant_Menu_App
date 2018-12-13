@@ -77,6 +77,14 @@ nav{
     color: #609f60;
 }
 
+.res-head a{
+    color: #000000;
+}
+
+.res-head a:hover{
+    color: #609f60;
+}
+
 /* Right Column */
 .col-r{
     float: right;
