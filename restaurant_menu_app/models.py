@@ -7,9 +7,11 @@ class Restaurant(db.Model):
     name = db.Column(db.String(80), nullable=False)
     id = db.Column(db.Integer, primary_key=True)
     menu_items = db.relationship('MenuItem', backref='restaurant', lazy=True)
+    user_id = db.Column(db.String(256), db.ForeignKey('user.id'), nullable=False)
+    private = db.Column(db.Boolean)
 
     def __repr__(self):
-        return f"Restaurant('{self.name}')"
+        return f"Restaurant('{self.name}', '{self.user.username}')"
 
 
 class MenuItem(db.Model):
