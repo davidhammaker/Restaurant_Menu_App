@@ -21,9 +21,11 @@ def create_app(config_class=Config):
     from restaurant_menu_app.jsons.views import jsons
     from restaurant_menu_app.main.views import main
     from restaurant_menu_app.restaurants.views import restaurants
+    from restaurant_menu_app.dance.views import blueprint as dance
     app.register_blueprint(items)
     app.register_blueprint(jsons)
     app.register_blueprint(main)
     app.register_blueprint(restaurants)
+    app.register_blueprint(dance, url_prefix="/login")
 
     return app
