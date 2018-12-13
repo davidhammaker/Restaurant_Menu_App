@@ -12,7 +12,9 @@ from restaurant_menu_app.items.views import items
 from restaurant_menu_app.jsons.views import jsons
 from restaurant_menu_app.main.views import main
 from restaurant_menu_app.restaurants.views import restaurants
+from restaurant_menu_app.errors.handlers import errors
 app.register_blueprint(items)
 app.register_blueprint(jsons)
 app.register_blueprint(main)
 app.register_blueprint(restaurants)
+app.register_blueprint(errors)
