@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from restaurant_menu_app.config import Config
 
 db = SQLAlchemy()
 
