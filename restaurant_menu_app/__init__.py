@@ -2,11 +2,17 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from restaurant_menu_app.config import Config
+from restaurant_menu_app.models import User
 
 db = SQLAlchemy()
 
 login_manager = LoginManager()
 login_manager.login_view = 'github.login'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 def create_app(config_class=Config):
