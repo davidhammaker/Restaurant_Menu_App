@@ -2,6 +2,7 @@ from flask import render_template, url_for, redirect, flash, request, Blueprint
 from restaurant_menu_app import db
 from restaurant_menu_app.models import Restaurant
 from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm
+from flask_login import current_user
 
 restaurants = Blueprint('restaurants', __name__)
 
@@ -19,7 +20,17 @@ def restaurant(restaurant_name):
 def new_restaurant():
     form = RestaurantForm()
     if form.validate_on_submit():
-        new_restaurant = Restaurant(name=form.name.data)
+        check_restaurant = Restaurant.query.filter_by(name=form.name.data).first()
+        if check_restaurant:
+            flash(f'"{form.name.data}" already exists.', 'bad')
+            return redirect(url_for('restaurants.new_restaurant', restaurant_name=restaurant.name))
+        if form.privacy.data == 'True':
+            private = True
+        else:
+            private = False
+        new_restaurant = Restaurant(name=form.name.data, user_id=current_user.id, private=private,
+                                    user=current_user)
+        print(new_restaurant)
         db.session.add(new_restaurant)
         db.session.commit()
         flash(f'"{form.name.data}" has been added!', 'good')
@@ -34,12 +45,17 @@ def edit(restaurant_name):
     if not restaurant:
         return redirect(url_for('main.home'))
     if form.validate_on_submit():
+        if form.privacy.data == 'True':
+            private = True
+        else:
+            private = False
         if restaurant.name != form.name.data:
             check_restaurant = Restaurant.query.filter_by(name=form.name.data).first()
             if check_restaurant:
                 flash(f'"{form.name.data}" already exists.', 'bad')
-                return redirect(url_for('items.edit_item', restaurant_name=restaurant.name))
-        restaurant.name = form.name.data
+                return redirect(url_for('restaurants.edit', restaurant_name=restaurant.name))
+            restaurant.name = form.name.data
+        restaurant.private=private
         db.session.commit()
         flash(f'"{form.name.data}" has been updated!', 'good')
         return redirect(url_for('restaurants.restaurant', restaurant_name=restaurant.name))

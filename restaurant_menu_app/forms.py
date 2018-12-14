@@ -7,12 +7,10 @@ from wtforms.validators import DataRequired, Length
 
 class RestaurantForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(min=1, max=50)])
+    privacy = SelectField('Privacy', choices=[('True', 'Private'),
+                                              ('False', 'Public')],
+                          validators=[DataRequired()])
     submit = SubmitField('Submit')
-
-    def validate_name(self, name):
-        restaurant = Restaurant.query.filter_by(name=name.data).first()
-        if restaurant:
-            raise ValidationError('That restaurant already exists.')
 
 
 class MenuItemsForm(FlaskForm):
