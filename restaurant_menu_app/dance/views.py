@@ -3,7 +3,7 @@ from flask import url_for, flash
 from sqlalchemy.orm.exc import NoResultFound
 from flask_dance.contrib.github import make_github_blueprint, github
 from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
-from flask_dance.consumer import oauth_authorized
+from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_login import current_user, login_user
 from restaurant_menu_app import db
 from restaurant_menu_app.models import OAuth, User
@@ -45,3 +45,8 @@ def github_logged_in(blueprint, token):
         login_user(user)
         flash("Successfully signed in with GitHub!", "good")
     return False
+
+
+@oauth_error.connect_via(blueprint)
+def github_error(blueprint, error, error_description=None, error_uri=None):
+    flash(f"OAuth error from {blueprint.name}! error={error} description={error_description} uri={error_uri}", "bad")
