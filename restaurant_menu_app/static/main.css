@@ -90,6 +90,21 @@ nav{
 }
 
 /* Comments */
+.privacy{
+    background-color: #396039;
+    color: #ffffff;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    width: 100px;
+    padding: 10px;
+    margin: auto;
+    border-color: #396039;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
 .menu{
     background-color: #ffffff;
     width: 450px;

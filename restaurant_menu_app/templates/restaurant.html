@@ -29,6 +29,15 @@
                 <h3>Menu</h3>
                 <br>
                 <p>This is the menu for "{{ restaurant.name }}."</p>
+                <br>
+                <br>
+                <div class="privacy">
+                    {% if restaurant.private %}
+                        Private
+                    {% else %}
+                        Public
+                    {% endif %}
+                </div>
             </div>
         </div>
 {% endblock content %}
