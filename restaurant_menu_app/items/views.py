@@ -2,11 +2,13 @@ from flask import render_template, url_for, redirect, flash, request, Blueprint
 from restaurant_menu_app import db
 from restaurant_menu_app.models import Restaurant, MenuItem
 from restaurant_menu_app.forms import DeleteConfirmForm, MenuItemsForm, EditItemForm
+from flask_login import login_required
 
 items = Blueprint('items', __name__)
 
 
 @items.route('/<string:restaurant_name>/add_item', methods=['GET', 'POST'])
+@login_required
 def add_item(restaurant_name):
     form = MenuItemsForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
@@ -31,6 +33,7 @@ def add_item(restaurant_name):
 
 
 @items.route('/<string:restaurant_name>/edit_item/<string:item_name>', methods=['GET', 'POST'])
+@login_required
 def edit_item(restaurant_name, item_name):
     form = EditItemForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
@@ -62,6 +65,7 @@ def edit_item(restaurant_name, item_name):
 
 
 @items.route('/<string:restaurant_name>/delete_item_confirm/<string:item_name>')
+@login_required
 def delete_item_confirm(restaurant_name, item_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     menu_item = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
@@ -74,6 +78,7 @@ def delete_item_confirm(restaurant_name, item_name):
 
 
 @items.route('/<string:restaurant_name>/delete_item/<string:item_name>', methods=['POST'])
+@login_required
 def delete_item(restaurant_name, item_name):
     menu_item = MenuItem.query.filter_by(name=item_name).first()
     form = DeleteConfirmForm()

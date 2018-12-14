@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect, flash, request, Blueprint
 from restaurant_menu_app import db
 from restaurant_menu_app.models import Restaurant
 from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 restaurants = Blueprint('restaurants', __name__)
 
@@ -17,6 +17,7 @@ def restaurant(restaurant_name):
 
 
 @restaurants.route('/new_restaurant', methods=['GET', 'POST'])
+@login_required
 def new_restaurant():
     form = RestaurantForm()
     if form.validate_on_submit():
@@ -39,6 +40,7 @@ def new_restaurant():
 
 
 @restaurants.route('/<string:restaurant_name>/edit', methods=['GET', 'POST'])
+@login_required
 def edit(restaurant_name):
     form = RestaurantForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
@@ -65,6 +67,7 @@ def edit(restaurant_name):
 
 
 @restaurants.route('/<string:restaurant_name>/delete_confirm')
+@login_required
 def delete_confirm(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
@@ -74,6 +77,7 @@ def delete_confirm(restaurant_name):
 
 
 @restaurants.route('/<string:restaurant_name>/delete', methods=['POST'])
+@login_required
 def delete(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     form = DeleteConfirmForm()
