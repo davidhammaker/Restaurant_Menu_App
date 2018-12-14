@@ -1,8 +1,8 @@
-from flask import render_template, url_for, redirect, flash, request, Blueprint
+from flask import render_template, url_for, redirect, flash, request, Blueprint, abort
 from restaurant_menu_app import db
 from restaurant_menu_app.models import Restaurant, MenuItem
 from restaurant_menu_app.forms import DeleteConfirmForm, MenuItemsForm, EditItemForm
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 items = Blueprint('items', __name__)
 
@@ -16,6 +16,8 @@ def add_item(restaurant_name):
         return redirect(url_for('main.home'))
     else:
         form.restaurant_id.data = restaurant.id
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
         if check_item:
@@ -42,6 +44,8 @@ def edit_item(restaurant_name, item_name):
         return redirect(url_for('main.home'))
     else:
         form.restaurant_id.data = restaurant.id
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         if menu_item.name != form.name.data:
             check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
@@ -71,6 +75,8 @@ def delete_item_confirm(restaurant_name, item_name):
     menu_item = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
     if not restaurant or not menu_item:
         return redirect(url_for('main.home'))
+    if restaurant.user != current_user:
+        abort(403)
     form = DeleteConfirmForm()
     return render_template('delete_item_confirm.html', form=form,
                            restaurant=restaurant, menu_item=menu_item,
@@ -82,6 +88,8 @@ def delete_item_confirm(restaurant_name, item_name):
 def delete_item(restaurant_name, item_name):
     menu_item = MenuItem.query.filter_by(name=item_name).first()
     form = DeleteConfirmForm()
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         if form.confirm.data == 'Delete':
             db.session.delete(menu_item)

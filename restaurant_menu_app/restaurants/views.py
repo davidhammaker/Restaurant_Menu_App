@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, flash, request, Blueprint
+from flask import render_template, url_for, redirect, flash, request, Blueprint, abort
 from restaurant_menu_app import db
 from restaurant_menu_app.models import Restaurant
 from restaurant_menu_app.forms import RestaurantForm, DeleteConfirmForm
@@ -12,6 +12,8 @@ def restaurant(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
         return redirect(url_for('main.home'))
+    if restaurant.private and restaurant.user != current_user:
+        abort(403)
     items = restaurant.menu_items
     return render_template('restaurant.html', restaurant=restaurant, items=items, title=restaurant_name)
 
@@ -46,6 +48,8 @@ def edit(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
         return redirect(url_for('main.home'))
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         if form.privacy.data == 'True':
             private = True
@@ -72,6 +76,8 @@ def delete_confirm(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
         return redirect(url_for('main.home'))
+    if restaurant.user != current_user:
+        abort(403)
     form = DeleteConfirmForm()
     return render_template('delete_confirm.html', form=form, restaurant=restaurant, title=f'Delete "{restaurant_name}"')
 
@@ -83,6 +89,8 @@ def delete(restaurant_name):
     form = DeleteConfirmForm()
     if not restaurant:
         return redirect(url_for('main.home'))
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         if form.confirm.data == 'Delete':
             db.session.delete(restaurant)

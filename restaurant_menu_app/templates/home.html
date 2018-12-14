@@ -11,6 +11,7 @@
                     {% endif %}
                 </div>
                 {% for restaurant in restaurants %}
+                    {% if not restaurant.private %}
                     <article>
                         <div class="res-head">
                             <a href="{{ url_for('restaurants.restaurant', restaurant_name=restaurant.name) }}">
@@ -19,6 +20,16 @@
                         </div>
                     </article>
                     <br>
+                    {% elif restaurant.user == current_user %}
+                    <article>
+                        <div class="res-head">
+                            <a href="{{ url_for('restaurants.restaurant', restaurant_name=restaurant.name) }}">
+                                <h1>{{ restaurant.name }}</h1>
+                            </a>
+                        </div>
+                    </article>
+                    <br>
+                    {% endif %}
                 {% endfor %}
             </div>
             {% if current_user.is_authenticated %}
