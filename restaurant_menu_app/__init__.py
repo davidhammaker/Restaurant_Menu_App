@@ -2,9 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from restaurant_menu_app.config import Config
-from restaurant_menu_app.models import User
 
 db = SQLAlchemy()
+
+from restaurant_menu_app.models import User
 
 login_manager = LoginManager()
 login_manager.login_view = 'github.login'
