@@ -28,7 +28,8 @@ def github_logged_in(blueprint, token):
     github_info = resp.json()
     github_user_id = str(github_info["id"])
 
-    query = OAuth.query.filter_by(provider=blueprint.name, provider_user_id=github_user_id, token=token)
+    query = OAuth.query.filter_by(provider=blueprint.name, provider_user_id=github_user_id)
+
     try:
         oauth = query.one()
     except NoResultFound:
