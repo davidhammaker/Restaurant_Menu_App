@@ -5,11 +5,17 @@ from flask_dance.contrib.github import make_github_blueprint, github
 from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
 from flask_dance.consumer import oauth_authorized, oauth_error
 from flask_login import current_user, login_user, login_required, logout_user
-from restaurant_menu_app import db
+from restaurant_menu_app import db, login_manager
 from restaurant_menu_app.models import OAuth, User
 
 blueprint = make_github_blueprint(client_id=os.environ.get("GH_CLIENT_ID"),
                                   client_secret=os.environ.get("GH_CLIENT_SECRET"))
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 blueprint.backend = SQLAlchemyBackend(OAuth, db.session, user=current_user)
 
