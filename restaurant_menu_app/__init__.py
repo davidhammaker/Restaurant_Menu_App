@@ -22,10 +22,12 @@ def create_app(config_class=Config):
     from restaurant_menu_app.main.views import main
     from restaurant_menu_app.restaurants.views import restaurants
     from restaurant_menu_app.dance.utils import blueprint as dance
+    from restaurant_menu_app.errors.handlers import errors
     app.register_blueprint(items)
     app.register_blueprint(jsons)
     app.register_blueprint(main)
     app.register_blueprint(restaurants)
     app.register_blueprint(dance, url_prefix="/login")
+    app.register_blueprint(errors)
 
     return app
