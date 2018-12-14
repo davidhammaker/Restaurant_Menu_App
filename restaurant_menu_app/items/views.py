@@ -74,7 +74,7 @@ def delete_item_confirm(restaurant_name, item_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     menu_item = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
     if not restaurant or not menu_item:
-        return redirect(url_for('main.home'))
+        abort(404)
     if restaurant.user != current_user:
         abort(403)
     form = DeleteConfirmForm()
@@ -87,6 +87,9 @@ def delete_item_confirm(restaurant_name, item_name):
 @login_required
 def delete_item(restaurant_name, item_name):
     menu_item = MenuItem.query.filter_by(name=item_name).first()
+    restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
+    if not restaurant or not menu_item:
+        abort(404)
     form = DeleteConfirmForm()
     if restaurant.user != current_user:
         abort(403)

@@ -11,7 +11,7 @@ restaurants = Blueprint('restaurants', __name__)
 def restaurant(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
-        return redirect(url_for('main.home'))
+        abort(404)
     if restaurant.private and restaurant.user != current_user:
         abort(403)
     items = restaurant.menu_items
@@ -47,7 +47,7 @@ def edit(restaurant_name):
     form = RestaurantForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
-        return redirect(url_for('main.home'))
+        abort(404)
     if restaurant.user != current_user:
         abort(403)
     if form.validate_on_submit():
@@ -75,7 +75,7 @@ def edit(restaurant_name):
 def delete_confirm(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     if not restaurant:
-        return redirect(url_for('main.home'))
+        abort(404)
     if restaurant.user != current_user:
         abort(403)
     form = DeleteConfirmForm()
@@ -88,7 +88,7 @@ def delete(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     form = DeleteConfirmForm()
     if not restaurant:
-        return redirect(url_for('main.home'))
+        abort(404)
     if restaurant.user != current_user:
         abort(403)
     if form.validate_on_submit():
