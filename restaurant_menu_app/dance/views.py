@@ -1,5 +1,5 @@
 import os
-from flask import url_for, flash, redirect
+from flask import flash
 from sqlalchemy.orm.exc import NoResultFound
 from flask_dance.contrib.github import make_github_blueprint, github
 from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
@@ -50,11 +50,3 @@ def github_logged_in(blueprint, token):
 @oauth_error.connect_via(blueprint)
 def github_error(blueprint, error, error_description=None, error_uri=None):
     flash(f"OAuth error from {blueprint.name}! error={error} description={error_description} uri={error_uri}", "bad")
-
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    flash("You have logged out.", "neutral")
-    return redirect(url_for('main.home'))
