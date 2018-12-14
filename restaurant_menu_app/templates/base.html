@@ -10,11 +10,19 @@
     <body>
         <nav>
             <div class="nav-l">
-                <a href="{{ url_for('main.home') }}">Restaurant Menu App</a>
+                    <a href="{{ url_for('main.home') }}">Restaurant Menu App</a>
+                {% else %}
+                    <a href="{{ url_for('dance.github.login') }}">Log In</a>
+                {% endif %}
             </div>
             <div class="nav-r">
                 <ul>
-                    <li><a href="{{ url_for('restaurants.new_restaurant') }}">New Restaurant</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('restaurants.new_restaurant') }}">New Restaurant</a></li>
+                        <li><a href="{{ url_for('dance.logout') }}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('dance.github.login') }}">Log In</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

@@ -3,6 +3,9 @@
 {% block content %}
         <div class="content">
             <div class="main">
+                <div class="welcome">
+                    You are logged in as {{ current_user.name }}.
+                </div>
                 {% for restaurant in restaurants %}
                     <article>
                         <div class="res-head">
