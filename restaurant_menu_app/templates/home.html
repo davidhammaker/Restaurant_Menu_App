@@ -4,7 +4,11 @@
         <div class="content">
             <div class="main">
                 <div class="welcome">
-                    You are logged in as {{ current_user.name }}.
+                    {% if current_user.is_authenticated %}
+                        You are logged in as {{ current_user.name }}.
+                    {% else %}
+                        Welcome! Please log in to view your restaurants.
+                    {% endif %}
                 </div>
                 {% for restaurant in restaurants %}
                     <article>
@@ -17,10 +21,12 @@
                     <br>
                 {% endfor %}
             </div>
-            <div class="col-r">
-                <h3>Restaurant List</h3>
-                <br>
-                <p>Select a restaurant to see the menu.</p>
-            </div>
+            {% if current_user.is_authenticated %}
+                <div class="col-r">
+                    <h3>Restaurant List</h3>
+                    <br>
+                    <p>Select a restaurant to see the menu.</p>
+                </div>
+            {% endif %}
         </div>
 {% endblock content %}
