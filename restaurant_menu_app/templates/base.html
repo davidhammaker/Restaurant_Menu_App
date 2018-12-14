@@ -16,9 +16,9 @@
                 <ul>
                     {% if current_user.is_authenticated %}
                         <li><a href="{{ url_for('restaurants.new_restaurant') }}">New Restaurant</a></li>
-                        <li><a href="{{ url_for('dance.logout') }}">Log Out</a></li>
+                        <li><a href="{{ url_for('main.logout') }}">Log Out</a></li>
                     {% else %}
-                        <li><a href="{{ url_for('dance.github.login') }}">Log In</a></li>
+                        <li><a href="{{ url_for('github.login') }}">Log In</a></li>
                     {% endif %}
                 </ul>
             </div>
