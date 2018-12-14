@@ -2,11 +2,13 @@ from flask import render_template, url_for, redirect, flash, request, Blueprint,
 from restaurant_menu_app import db
 from restaurant_menu_app.models import Restaurant, MenuItem
 from restaurant_menu_app.forms import DeleteConfirmForm, MenuItemsForm, EditItemForm
+from flask_login import login_required, current_user
 
 items = Blueprint('items', __name__)
 
 
 @items.route('/<string:restaurant_name>/add_item', methods=['GET', 'POST'])
+@login_required
 def add_item(restaurant_name):
     form = MenuItemsForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
@@ -14,6 +16,8 @@ def add_item(restaurant_name):
         abort(404)
     else:
         form.restaurant_id.data = restaurant.id
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
         if check_item:
@@ -31,6 +35,7 @@ def add_item(restaurant_name):
 
 
 @items.route('/<string:restaurant_name>/edit_item/<string:item_name>', methods=['GET', 'POST'])
+@login_required
 def edit_item(restaurant_name, item_name):
     form = EditItemForm()
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
@@ -39,6 +44,8 @@ def edit_item(restaurant_name, item_name):
         abort(404)
     else:
         form.restaurant_id.data = restaurant.id
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         if menu_item.name != form.name.data:
             check_item = MenuItem.query.filter_by(name=form.name.data, restaurant_id=form.restaurant_id.data).first()
@@ -62,11 +69,14 @@ def edit_item(restaurant_name, item_name):
 
 
 @items.route('/<string:restaurant_name>/delete_item_confirm/<string:item_name>')
+@login_required
 def delete_item_confirm(restaurant_name, item_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     menu_item = MenuItem.query.filter_by(name=item_name, restaurant_id=restaurant.id).first()
     if not restaurant or not menu_item:
-        abort(404)
+        return redirect(url_for('main.home'))
+    if restaurant.user != current_user:
+        abort(403)
     form = DeleteConfirmForm()
     return render_template('delete_item_confirm.html', form=form,
                            restaurant=restaurant, menu_item=menu_item,
@@ -74,9 +84,12 @@ def delete_item_confirm(restaurant_name, item_name):
 
 
 @items.route('/<string:restaurant_name>/delete_item/<string:item_name>', methods=['POST'])
+@login_required
 def delete_item(restaurant_name, item_name):
     menu_item = MenuItem.query.filter_by(name=item_name).first()
     form = DeleteConfirmForm()
+    if restaurant.user != current_user:
+        abort(403)
     if form.validate_on_submit():
         if form.confirm.data == 'Delete':
             db.session.delete(menu_item)

@@ -3,7 +3,16 @@
 {% block content %}
         <div class="content">
             <div class="main">
+                <div class="welcome">
+                    {% if current_user.is_authenticated %}
+                        You are logged in as {{ current_user.name }}.
+                    {% else %}
+                        Welcome! Please log in to view your restaurants.
+                    {% endif %}
+                </div>
+                <br>
                 {% for restaurant in restaurants %}
+                    {% if not restaurant.private %}
                     <article>
                         <div class="res-head">
                             <a href="{{ url_for('restaurants.restaurant', restaurant_name=restaurant.name) }}">
@@ -12,12 +21,24 @@
                         </div>
                     </article>
                     <br>
+                    {% elif restaurant.user == current_user %}
+                    <article>
+                        <div class="res-head">
+                            <a href="{{ url_for('restaurants.restaurant', restaurant_name=restaurant.name) }}">
+                                <h1>{{ restaurant.name }}</h1>
+                            </a>
+                        </div>
+                    </article>
+                    <br>
+                    {% endif %}
                 {% endfor %}
             </div>
-            <div class="col-r">
-                <h3>Restaurant List</h3>
-                <br>
-                <p>Select a restaurant to see the menu.</p>
-            </div>
+            {% if current_user.is_authenticated %}
+                <div class="col-r">
+                    <h3>Restaurant List</h3>
+                    <br>
+                    <p>Select a restaurant to see the menu.</p>
+                </div>
+            {% endif %}
         </div>
 {% endblock content %}

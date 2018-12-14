@@ -21,6 +21,20 @@
                         <p>{{ form.name(class="res-form-field") }}</p>
                     {% endif %}
                     <br>
+                    <h3>{{ form.privacy.label }}:</h3>
+                    {% if form.privacy.errors %}
+                        <p>{{ form.privacy(class="res-form-field-errors") }}</p>
+                        <div class="error-feedback">
+                            <ul>
+                                {% for error in form.privacy.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% else %}
+                        <p>{{ form.privacy(class="res-form-field") }}</p>
+                    {% endif %}
+                    <br>
                     {{ form.submit(class="res-form-button") }}
                 </form>
             </div>
